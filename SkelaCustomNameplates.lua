@@ -1,5 +1,3 @@
-﻿local showFriendly = false
-
 local Players = {}
 local Mobs = {}
 local Targets = {}
@@ -30,7 +28,8 @@ function SCNInitialise()
 		SCN_Options["classification"] = true
 	end
 		-- ensure backward compatibility for text size options
-	if SCN_Options["name_text_size"] == nil then
+	if SCN_Options["show_friendly"] == nil then
+		SCN_Options["show_friendly"] = false
 		SCN_Options["name_text_size"] = 12
 		SCN_Options["rank_text_size"] = 12
 		SCN_Options["level_text_size"] = 11
@@ -38,6 +37,20 @@ function SCNInitialise()
 		SCN_Options["guild_text_size_short"] = 13
 		SCN_Options["guild_text_size_long"] = 10
 		SCN_Options["guild_text_max_length_of_short"] = 20
+	end
+end
+
+function SCNReset()
+	if (SCN_Options["toggle"]) then
+		ShowNameplates()
+		if (SCN_Options["show_friendly"]) then
+			ShowFriendNameplates()
+		else
+			HideFriendNameplates()
+		end
+	else
+		HideNameplates()
+		HideFriendNameplates()
 	end
 end
 
@@ -66,6 +79,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 	if parameters[1] == nil then
 		scn_print("Skela Custom Nameplates:")
 		scn_print("-toggle          // Toggle the addon")
+		scn_print("-showfriendly    // Toggle showing friendlies by default")
 		scn_print("-safetarget      // Toggle target safe mode")
 		scn_print("-click           // Toggle targeting by nameplates")
 		scn_print("-fifths          // Toggle lines by every 20% hp")
@@ -81,6 +95,17 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 			scn_print("The addon is turned ON!")
 		else
 			scn_print("The addon is turned Off!")
+			ReloadUI();
+		end
+		return
+	end
+	if parameters[1] == "showfriendly" then
+		SCN_Options["show_friendly"] = not SCN_Options["show_friendly"]
+		if SCN_Options["show_friendly"] then
+			scn_print("Friendlies' nameplates are now showed by default!")
+		else
+			scn_print("Friendlies' nameplates are now hidden by default!")
+			ReloadUI();
 		end
 		return
 	end
@@ -525,16 +550,6 @@ local f = CreateFrame("frame")
 f:RegisterEvent("PLAYER_ENTERING_WORLD")
 f:SetScript("OnEvent", function()
 	SCNInitialise()
-	if (SCN_Options["toggle"]) then
-		ShowNameplates()
-        if (showFriendly) then
-            ShowFriendNameplates()
-        else
-            HideFriendNameplates()
-        end
-	else
-		HideNameplates()
-		HideFriendNameplates()
-	end
+	SCNReset()
 end)
 f:SetScript("OnUpdate",CustomNameplates_OnUpdate)
