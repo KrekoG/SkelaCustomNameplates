@@ -118,6 +118,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 		end
 
 		scn_print("Skela Custom Nameplates:")
+		scn_print("/scn <option>")
 		scn_print("- toggle " .. grey .. "// Toggle the addon (" .. toggle .. grey .. ")")
 		scn_print("- showfriendly " .. grey .. "// Toggle showing friendlies by default (" .. showfriendly .. grey .. ")")
 		scn_print("- safetarget " .. grey .. "// Toggle target safe mode (" .. safetarget .. grey .. ")")
@@ -277,7 +278,13 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 		else
 			scn_print("Change font size related settings")
 			scn_print("/scn change <option> <new value>")
-			scn_print("Options: Name (" .. colourCurrentText(SCN_Options["name_text_size"]) .. "), Rank (" .. colourCurrentText(SCN_Options["rank_text_size"]) .. "), Level (" .. colourCurrentText(SCN_Options["level_text_size"]) .. "), Classification (" .. colourCurrentText(SCN_Options["classification_text_size"]) .. "), GuildWhenShort (" .. colourCurrentText(SCN_Options["guild_text_size_short"]) .. "), GuildWhenLong (" .. colourCurrentText(SCN_Options["guild_text_size_long"]) .. "), GuildMaxLengthOfShort (" .. colourCurrentText(SCN_Options["guild_text_max_length_of_short"]) .. ")")
+			scn_print("- Name " .. grey .. "// Change the font size of the name (Current:" .. colourCurrentText(SCN_Options["name_text_size"]) .. grey .."; Default:12)")
+			scn_print("- Rank " .. grey .. "// Change the font size of the rank (Current:" .. colourCurrentText(SCN_Options["rank_text_size"]) .. grey .."; Default:12)")
+			scn_print("- Level " .. grey .. "// Change the font size of the level (Current:" .. colourCurrentText(SCN_Options["level_text_size"]) .. grey .."; Default:11)")
+			scn_print("- Classification " .. grey .. "// Change the font size of the classification (wether the mob is elite or rare) (Current:" .. colourCurrentText(SCN_Options["classification_text_size"]) .. grey .."; Default:12)")
+			scn_print("- GuildWhenShort " .. grey .. "// Change the font size of the guildname when the guildname is short (Current:" .. colourCurrentText(SCN_Options["guild_text_size_short"]) .. grey .."; Default:13)")
+			scn_print("- GuildWhenLong " .. grey .. "// Change the font size of the guildname when the guildname is long (Current:" .. colourCurrentText(SCN_Options["guild_text_size_long"]) .. grey .."; Default:10)")
+			scn_print("- GuildMaxLengthOfShort " .. grey .. "// Change how many characters a guild name has to be to still classify as short (Current:" .. colourCurrentText(SCN_Options["guild_text_max_length_of_short"]) .. grey .."; Default:20)")
 		end
 	end
 end
