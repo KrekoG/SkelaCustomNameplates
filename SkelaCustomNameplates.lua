@@ -14,37 +14,38 @@ local Icons = {
 	["Warlock"] = "Interface\\AddOns\\SkelaCustomNameplates\\Class\\ClassIcon_Warlock",
 	["Warrior"] = "Interface\\AddOns\\SkelaCustomNameplates\\Class\\ClassIcon_Warrior",
 }
-if SCN_Options == nil then
-	SCN_Options = {}
-	SCN_Options["toggle"] = true
-	SCN_Options["safetarget"] = true
-	SCN_Options["click"] = true
-	SCN_Options["hp"] = true
-	SCN_Options["fifths"] = true
-	SCN_Options["pic"] = "barSmall5ths"
-	SCN_Options["pvprank"] = true
-	SCN_Options["guild"] = true
-	SCN_Options["showPets"] = false
-	SCN_Options["classification"] = true
-	SCN_Options["guild_text_size_short"] = 13
-	SCN_Options["guild_text_size_long"] = 10
-	SCN_Options["guild_text_length_of_long"] = 20
-	SCN_Options["name_text_size"] = 12
-	SCN_Options["rank_text_size"] = 12
-	SCN_Options["level_text_size"] = 11
-	SCN_Options["classification_text_size"] = 12
 
-
-end
-	-- ensure backward compatibility for text size options
-if SCN_Options["guild_text_size_short"] == nil then
-	SCN_Options["guild_text_size_short"] = 13
-	SCN_Options["guild_text_size_long"] = 10
-	SCN_Options["guild_text_length_of_long"] = 20
-	SCN_Options["name_text_size"] = 12
-	SCN_Options["rank_text_size"] = 12
-	SCN_Options["level_text_size"] = 11
-	SCN_Options["classification_text_size"] = 12
+function SCNInitialise()
+	if SCN_Options == nil then
+		SCN_Options = {}
+		SCN_Options["toggle"] = true
+		SCN_Options["safetarget"] = true
+		SCN_Options["click"] = true
+		SCN_Options["hp"] = true
+		SCN_Options["fifths"] = true
+		SCN_Options["pic"] = "barSmall5ths"
+		SCN_Options["pvprank"] = true
+		SCN_Options["guild"] = true
+		SCN_Options["showPets"] = false
+		SCN_Options["classification"] = true
+		SCN_Options["guild_text_size_short"] = 13
+		SCN_Options["guild_text_size_long"] = 10
+		SCN_Options["guild_text_length_of_long"] = 20
+		SCN_Options["name_text_size"] = 12
+		SCN_Options["rank_text_size"] = 12
+		SCN_Options["level_text_size"] = 11
+		SCN_Options["classification_text_size"] = 12
+	end
+		-- ensure backward compatibility for text size options
+	if SCN_Options["guild_text_size_short"] == nil then
+		SCN_Options["guild_text_size_short"] = 13
+		SCN_Options["guild_text_size_long"] = 10
+		SCN_Options["guild_text_length_of_long"] = 20
+		SCN_Options["name_text_size"] = 12
+		SCN_Options["rank_text_size"] = 12
+		SCN_Options["level_text_size"] = 11
+		SCN_Options["classification_text_size"] = 12
+	end
 end
 
 -----------------------------------my functions
@@ -452,6 +453,7 @@ end
 local f = CreateFrame("frame")
 f:RegisterEvent("PLAYER_ENTERING_WORLD")
 f:SetScript("OnEvent", function()
+	SCNInitialise()
 	if (SCN_Options["toggle"]) then
 		ShowNameplates()
         if (showFriendly) then
