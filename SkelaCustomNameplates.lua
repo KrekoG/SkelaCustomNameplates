@@ -16,7 +16,7 @@ local Icons = {
 }
 if SCN_Options == nil then
 	SCN_Options = {}
-	SCN_Options["toogle"] = true
+	SCN_Options["toggle"] = true
 	SCN_Options["safetarget"] = true
 	SCN_Options["click"] = true
 	SCN_Options["hp"] = true
@@ -46,18 +46,18 @@ SLASH_CUSTOMNAMEPLATES1 = '/scn';
 function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 	if msg == "" then
 		scn_print("Skela Custom Nameplates:")
-		scn_print("-toogle          // Toogle the addon")
-		scn_print("-safetarget      // Toogle target safe mode")
-		scn_print("-click           // Toogle targeting by nameplates")
-		scn_print("-fifths          // Toogle lines by every 20% hp")
+		scn_print("-toggle          // Toggle the addon")
+		scn_print("-safetarget      // Toggle target safe mode")
+		scn_print("-click           // Toggle targeting by nameplates")
+		scn_print("-fifths          // Toggle lines by every 20% hp")
 		scn_print("-pvprank         // Show pvp ranks!")
 		scn_print("-guild           // Show guild names!")
 		scn_print("-classification  // Show if the mob is elite or rare!")
 		return
 	end
-	if msg == "toogle" then
-		SCN_Options["toogle"] = not SCN_Options["toogle"]
-		if SCN_Options["toogle"] then
+	if msg == "toggle" then
+		SCN_Options["toggle"] = not SCN_Options["toggle"]
+		if SCN_Options["toggle"] then
 			scn_print("The addon is turned ON!")
 		else
 			scn_print("The addon is turned Off!")
@@ -196,7 +196,7 @@ end
 ]]
 function CustomNameplates_OnUpdate()
 
-	if not SCN_Options["toogle"] then
+	if not SCN_Options["toggle"] then
 		return
 	end
 	local frames = { WorldFrame:GetChildren() }
@@ -435,7 +435,7 @@ end
 local f = CreateFrame("frame")
 f:RegisterEvent("PLAYER_ENTERING_WORLD")
 f:SetScript("OnEvent", function()
-	if (SCN_Options["toogle"]) then
+	if (SCN_Options["toggle"]) then
 		ShowNameplates()
         if (showFriendly) then
             ShowFriendNameplates()
