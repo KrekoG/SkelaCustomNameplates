@@ -54,9 +54,6 @@ function SCNReset()
 	end
 end
 
------------------------------------my functions
-
-
 
 local function scn_print(t)
 	DEFAULT_CHAT_FRAME:AddMessage(t)
@@ -69,24 +66,60 @@ local function scn_is_numeric(x)
     return false
 end
 
------------------------------------my functions
-
 -------------------------------------------Slash fuctions
 SLASH_CUSTOMNAMEPLATES1 = '/scn';
 
 function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 	local parameters = {strsplit(" ", msg, 4)}
 	if parameters[1] == nil then
+
+		local grey = "|cff9d9d9d"
+		local green = "|cff1eff00"
+		local red = "|cffff0000"
+
+		local toggle = red .. "Off"
+		local showfriendly = red .. "Hide"
+		local safetarget = red .. "Off"
+		local click = red .. "Off"
+		local fifths = red .. "Hide"
+		local pvprank = red .. "Hide"
+		local guild = red .. "Hide"
+		local classification = red .. "Hide"
+
+		if  SCN_Options["toggle"] then
+			toggle = green .. "On"
+		end
+		if  SCN_Options["show_friendly"] then
+			showfriendly = green .. "Show"
+		end
+		if  SCN_Options["safetarget"] then
+			safetarget = green .. "On"
+		end
+		if  SCN_Options["click"] then
+			click = green .. "On"
+		end
+		if  SCN_Options["fifths"] then
+			fifths = green .. "Show"
+		end
+		if  SCN_Options["pvprank"] then
+			pvprank = green .. "Show"
+		end
+		if  SCN_Options["guild"] then
+			guild = green .. "Show"
+		end
+		if  SCN_Options["classification"] then
+			classification = green .. "Show"
+		end
 		scn_print("Skela Custom Nameplates:")
-		scn_print("-toggle          // Toggle the addon")
-		scn_print("-showfriendly    // Toggle showing friendlies by default")
-		scn_print("-safetarget      // Toggle target safe mode")
-		scn_print("-click           // Toggle targeting by nameplates")
-		scn_print("-fifths          // Toggle lines by every 20% hp")
-		scn_print("-pvprank         // Show pvp ranks")
-		scn_print("-guild           // Show guild names")
-		scn_print("-classification  // Show if the mob is elite or rare")
-		scn_print("-change          // Change font size related settings")
+		scn_print("- toggle " .. grey .. "// Toggle the addon (" .. toggle .. grey .. ")")
+		scn_print("- showfriendly " .. grey .. "// Toggle showing friendlies by default (" .. showfriendly .. grey .. ")")
+		scn_print("- safetarget " .. grey .. "// Toggle target safe mode (" .. safetarget .. grey .. ")")
+		scn_print("- click " .. grey .. "// Toggle targeting by nameplates (" .. click .. grey .. ")")
+		scn_print("- fifths " .. grey .. "// Toggle lines by every 20% hp (" .. fifths .. grey .. ")")
+		scn_print("- pvprank " .. grey .. "// Show pvp ranks (" .. pvprank .. grey .. ")")
+		scn_print("- guild " .. grey .. "// Show guild names (" .. guild .. grey .. ")")
+		scn_print("- classification " .. grey .. "// Show if the mob is elite or rare (" .. classification .. grey .. ")")
+		scn_print("- change " .. grey .. "// Change font size related settings")
 		return
 	end
 	if parameters[1] == "toggle" then
@@ -105,7 +138,6 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 			scn_print("Friendlies' nameplates are now showed by default!")
 		else
 			scn_print("Friendlies' nameplates are now hidden by default!")
-			ReloadUI();
 		end
 		return
 	end
@@ -237,8 +269,6 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 end
 -------------------------------------------Slash fuctions
 
------------------------------------my functions
-
 local function fillPlayerDB(name)
 	if Targets[name] == nil then
 		TargetByName(name, true)
@@ -256,10 +286,6 @@ local function fillPlayerDB(name)
 		end
 	end
 end
-local function GetPVPRank(n)
-return n
-end
------------------------------------my functions
 
 local function IsNamePlateFrame(frame)
  local overlayRegion = frame:GetRegions()
@@ -294,20 +320,7 @@ local function isPet(name)
 	end
 	return false
 end
---[[
-local function fillPlayerDB(name)
-	if Targets[name] == nil then
-		TargetByName(name, true)
-		table.insert(Targets, name)
-		Targets[name] = "ok"
-		if UnitIsPlayer("target") then
-			local class = UnitClass("target")
-			table.insert(Players, name)
-			Players[name] = {["class"] = class}
-		end
-	end
-end
-]]
+
 function SCN_OnUpdate()
 
 	if not SCN_Options["toggle"] then
@@ -323,7 +336,7 @@ function SCN_OnUpdate()
 
 
 --SCN_Options setup
---			local mouseEnabled = namePlate:IsMouseEnabled()
+--		local mouseEnabled = namePlate:IsMouseEnabled()
 			if SCN_Options["click"] then
 				namePlate:EnableMouse(true)
 			else
@@ -454,11 +467,6 @@ function SCN_OnUpdate()
 			local name = Name:GetText()
 --Recording target
 
---[[		if  Players[name] == nil and UnitName("target") == nil and string.find(name, "%s") == nil and string.len(name) <= 12 and Targets[name] == nil then
-				fillPlayerDB(name)
-				ClearTarget()
-			end]]
-
 			if SCN_Options["safetarget"] then
 				if  Players[name] == nil and Mobs[name] == nil and UnitName("target") == nil and Targets[name] == nil then
 					fillPlayerDB(name)
@@ -480,7 +488,6 @@ function SCN_OnUpdate()
 				else
 					TargetByName(SCN_CurrentTarget)
 				end
-
 			end
 --Recording target
 --Display Non-combat Pets
@@ -492,9 +499,6 @@ function SCN_OnUpdate()
 				end
 			end
 --Display Non-combat Pets
-			if	Players[name] ~= nil then
---				Name:SetText(Players[name]["pvpname"]);
-			end
 
 --Display ClassIcon
 			if  Players[name] ~= nil and namePlate.classIcon:GetTexture() == "Solid Texture" and string.find(namePlate.classIcon:GetTexture(), "Interface") == nil then
@@ -510,9 +514,9 @@ function SCN_OnUpdate()
 				if Players[name]["guild"] ~= nil and SCN_Options["guild"] then
 					namePlate.guild:SetText("<"..Players[name]["guild"]..">")
 					if (strlen(Players[name]["guild"]) > SCN_Options["guild_text_max_length_of_short"]) then
-						namePlate.guild:SetFont("Interface\\AddOns\\CustomNameplates\\Fonts\\Ubuntu-C.ttf", SCN_Options["guild_text_size_long"]) --10 default
+						namePlate.guild:SetFont("Interface\\AddOns\\CustomNameplates\\Fonts\\Ubuntu-C.ttf", SCN_Options["guild_text_size_long"])
 					else
-						namePlate.guild:SetFont("Interface\\AddOns\\CustomNameplates\\Fonts\\Ubuntu-C.ttf", SCN_Options["guild_text_size_short"]) --13 default
+						namePlate.guild:SetFont("Interface\\AddOns\\CustomNameplates\\Fonts\\Ubuntu-C.ttf", SCN_Options["guild_text_size_short"])
 					end
 					namePlate.guild:Show()
 				else
@@ -535,7 +539,7 @@ function SCN_OnUpdate()
 --Display PVPRank
 			if	Players[name] ~= nil then
 				if Players[name]["pvprank"] ~= nil and SCN_Options["pvprank"] then
-					namePlate.pvprank:SetText(GetPVPRank(Players[name]["pvprank"]))
+					namePlate.pvprank:SetText(Players[name]["pvprank"])
 					namePlate.pvprank:Show()
 				else
 					namePlate.pvprank:Hide()
