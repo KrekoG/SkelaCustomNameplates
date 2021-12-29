@@ -27,7 +27,7 @@ function SCNInitialise()
 		SCN_Options["showPets"] = false
 		SCN_Options["classification"] = true
 	end
-		-- ensure backward compatibility for text size options
+		-- ensure backward compatibility for new options
 	if SCN_Options["show_friendly"] == nil then
 		SCN_Options["show_friendly"] = false
 		SCN_Options["name_text_size"] = 12
