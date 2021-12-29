@@ -13,6 +13,12 @@ local Icons = {
 	["Warrior"] = "Interface\\AddOns\\SkelaCustomNameplates\\Class\\ClassIcon_Warrior",
 }
 
+local red = "|cffff0000"
+local green = "|cff1eff00"
+local blue = "|cff0070dd"
+local grey = "|cff9d9d9d"
+local white = "|r"
+
 function SCNInitialise()
 	if SCN_Options == nil then
 		SCN_Options = {}
@@ -71,11 +77,12 @@ SLASH_CUSTOMNAMEPLATES1 = '/scn';
 
 function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 	local parameters = {strsplit(" ", msg, 4)}
-	if parameters[1] == nil then
 
-		local grey = "|cff9d9d9d"
-		local green = "|cff1eff00"
-		local red = "|cffff0000"
+	local function colourCurrentText(text)
+		return blue .. text .. white
+	end
+
+	if parameters[1] == nil then
 
 		local toggle = red .. "Off"
 		local showfriendly = red .. "Hide"
@@ -199,7 +206,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 	elseif parameters[1] ~= nil and parameters[1] == "change" then
 		if parameters[2] == "Name" then
 			if parameters[3] == nil then
-				scn_print("Change the font size of the name (Default:12)")
+				scn_print("Change the font size of the name (Current:" .. colourCurrentText(SCN_Options["name_text_size"]) .. "; Default:12)")
 				scn_print("/scn change Name <new value>")
 			elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
 				SCN_Options["name_text_size"] = tonumber(parameters[3])
@@ -208,7 +215,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 			end
 		elseif parameters[2] == "Rank" then
 				if parameters[3] == nil then
-					scn_print("Change the font size of the rank (Default:12)")
+					scn_print("Change the font size of the rank (Current:" .. colourCurrentText(SCN_Options["rank_text_size"]) .. "; Default:12)")
 					scn_print("/scn change Rank <new value>")
 				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
 					SCN_Options["rank_text_size"] = tonumber(parameters[3])
@@ -217,7 +224,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 				end
 		elseif parameters[2] == "Level" then
 				if parameters[3] == nil then
-					scn_print("Change the font size of the level (Default:11)")
+					scn_print("Change the font size of the level (Current:" .. colourCurrentText(SCN_Options["level_text_size"]) .. "; Default:11)")
 					scn_print("/scn change Level <new value>")
 				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
 					SCN_Options["level_text_size"] = tonumber(parameters[3])
@@ -226,7 +233,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 				end
 		elseif parameters[2] == "Classification" then
 				if parameters[3] == nil then
-					scn_print("Change the font size of the classification (wether the mob is elite or rare) (Default:12)")
+					scn_print("Change the font size of the classification (wether the mob is elite or rare) (Current:" .. colourCurrentText(SCN_Options["classification_text_size"]) .. "; Default:12)")
 					scn_print("/scn change Classification <new value>")
 				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
 					SCN_Options["classification_text_size"] = tonumber(parameters[3])
@@ -235,7 +242,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 				end
 		elseif parameters[2] == "GuildWhenShort" then
 				if parameters[3] == nil then
-					scn_print("Change the font size of the guildname when the guildname is short (see GuildMaxLengthOfShort) (Default:13)")
+					scn_print("Change the font size of the guildname when the guildname is short (see GuildMaxLengthOfShort) (Current:" .. colourCurrentText(SCN_Options["guild_text_size_short"]) .. "; Default:13)")
 					scn_print("/scn change GuildWhenShort <new value>")
 				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
 					SCN_Options["guild_text_size_short"] = tonumber(parameters[3])
@@ -244,7 +251,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 				end
 		elseif parameters[2] == "GuildWhenLong" then
 				if parameters[3] == nil then
-					scn_print("Change the font size of the guildname when the guildname is long (see GuildMaxLengthOfShort) (Default:10)")
+					scn_print("Change the font size of the guildname when the guildname is long (see GuildMaxLengthOfShort) (Current:" .. colourCurrentText(SCN_Options["guild_text_size_long"]) .. "; Default:10)")
 					scn_print("/scn change GuildWhenLong <new value>")
 				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
 					SCN_Options["guild_text_size_long"] = tonumber(parameters[3])
@@ -253,7 +260,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 				end
 		elseif parameters[2] == "GuildMaxLengthOfShort" then
 				if parameters[3] == nil then
-					scn_print("Change how many characters a guild name has to be to still classify as short (Default:20)")
+					scn_print("Change how many characters a guild name has to be to still classify as short (Current:" .. colourCurrentText(SCN_Options["guild_text_max_length_of_short"]) .. "; Default:20)")
 					scn_print("/scn change GuildMaxLengthOfShort <new value>")
 				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
 					SCN_Options["guild_text_max_length_of_short"] = tonumber(parameters[3])
@@ -263,10 +270,11 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 		else
 			scn_print("Change font size related settings")
 			scn_print("/scn change <option> <new value>")
-			scn_print("Options: Name, Rank, Level, Classification, GuildWhenShort, GuildWhenLong, GuildMaxLengthOfShort")
+			scn_print("Options: Name (" .. colourCurrentText(SCN_Options["name_text_size"]) .. "), Rank (" .. colourCurrentText(SCN_Options["rank_text_size"]) .. "), Level (" .. colourCurrentText(SCN_Options["level_text_size"]) .. "), Classification (" .. colourCurrentText(SCN_Options["classification_text_size"]) .. "), GuildWhenShort (" .. colourCurrentText(SCN_Options["guild_text_size_short"]) .. "), GuildWhenLong (" .. colourCurrentText(SCN_Options["guild_text_size_long"]) .. "), GuildMaxLengthOfShort (" .. colourCurrentText(SCN_Options["guild_text_max_length_of_short"]) .. ")")
 		end
 	end
 end
+
 -------------------------------------------Slash fuctions
 
 local function fillPlayerDB(name)
