@@ -210,6 +210,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 				scn_print("/scn change Name <new value>")
 			elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
 				SCN_Options["name_text_size"] = tonumber(parameters[3])
+				scn_print("Font size of the name is set to " .. colourCurrentText(SCN_Options["name_text_size"]))
 			else
 				scn_print("Invalid parameter given: " .. parameters[3])
 			end
@@ -219,6 +220,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 					scn_print("/scn change Rank <new value>")
 				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
 					SCN_Options["rank_text_size"] = tonumber(parameters[3])
+					scn_print("Font size of the rank is set to " .. colourCurrentText(SCN_Options["rank_text_size"]))
 				else
 					scn_print("Invalid parameter given: " .. parameters[3])
 				end
@@ -228,6 +230,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 					scn_print("/scn change Level <new value>")
 				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
 					SCN_Options["level_text_size"] = tonumber(parameters[3])
+					scn_print("Font size of the level is set to " .. colourCurrentText(SCN_Options["level_text_size"]))
 				else
 					scn_print("Invalid parameter given: " .. parameters[3])
 				end
@@ -237,6 +240,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 					scn_print("/scn change Classification <new value>")
 				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
 					SCN_Options["classification_text_size"] = tonumber(parameters[3])
+					scn_print("Font size of the classification is set to " .. colourCurrentText(SCN_Options["classification_text_size"]))
 				else
 					scn_print("Invalid parameter given: " .. parameters[3])
 				end
@@ -246,6 +250,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 					scn_print("/scn change GuildWhenShort <new value>")
 				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
 					SCN_Options["guild_text_size_short"] = tonumber(parameters[3])
+					scn_print("Font size of the guildname when the guildname is short is set to " .. colourCurrentText(SCN_Options["guild_text_size_short"]))
 				else
 					scn_print("Invalid parameter given: " .. parameters[3])
 				end
@@ -255,6 +260,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 					scn_print("/scn change GuildWhenLong <new value>")
 				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
 					SCN_Options["guild_text_size_long"] = tonumber(parameters[3])
+					scn_print("Font size of the guildname when the guildname is long is set to " .. colourCurrentText(SCN_Options["guild_text_size_long"]))
 				else
 					scn_print("Invalid parameter given: " .. parameters[3])
 				end
@@ -264,6 +270,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 					scn_print("/scn change GuildMaxLengthOfShort <new value>")
 				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
 					SCN_Options["guild_text_max_length_of_short"] = tonumber(parameters[3])
+					scn_print("The number of characters the guild name has to be to still classify as short is set to " .. colourCurrentText(SCN_Options["guild_text_size_long"]))
 				else
 					scn_print("Invalid parameter given: " .. parameters[3])
 				end
