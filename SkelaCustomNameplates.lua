@@ -36,6 +36,16 @@ if SCN_Options == nil then
 
 
 end
+	-- ensure backward compatibility for text size options
+if SCN_Options["guild_text_size_short"] == nil then
+	SCN_Options["guild_text_size_short"] = 13
+	SCN_Options["guild_text_size_long"] = 10
+	SCN_Options["guild_text_length_of_long"] = 20
+	SCN_Options["name_text_size"] = 12
+	SCN_Options["rank_text_size"] = 12
+	SCN_Options["level_text_size"] = 11
+	SCN_Options["classification_text_size"] = 12
+end
 
 -----------------------------------my functions
 
@@ -271,7 +281,7 @@ function CustomNameplates_OnUpdate()
 				namePlate.guild:ClearAllPoints()
 				namePlate.guild:SetPoint("CENTER", HealthBar, "CENTER", 0, -10)
 				namePlate.guild:SetFontObject(GameFontNormal)
-				namePlate.guild:SetFont("Interface\\AddOns\\CustomNameplates\\Fonts\\Ubuntu-C.ttf", SCN_Options["guild_text_size"])
+				namePlate.guild:SetFont("Interface\\AddOns\\CustomNameplates\\Fonts\\Ubuntu-C.ttf", SCN_Options["guild_text_size_short"])
 				namePlate.guild:SetText(".");
 				namePlate.guild:Hide();
 			end
@@ -284,7 +294,7 @@ function CustomNameplates_OnUpdate()
 				namePlate.pvprank:SetPoint("CENTER", HealthBar, "CENTER", 0, 21)
 				namePlate.pvprank:SetFontObject(GameFontNormal)
 				namePlate.pvprank:SetTextColor(1,1,1,0.9)
-				namePlate.pvprank:SetFont("Interface\\AddOns\\CustomNameplates\\Fonts\\Ubuntu-C.ttf",SCN_Options["rank_text_size"])
+				namePlate.pvprank:SetFont("Interface\\AddOns\\CustomNameplates\\Fonts\\Ubuntu-C.ttf", SCN_Options["rank_text_size"])
 				namePlate.pvprank:SetText(".");
 				namePlate.pvprank:Hide();
 			end
@@ -403,7 +413,7 @@ function CustomNameplates_OnUpdate()
 				if Players[name]["guild"] ~= nil and SCN_Options["guild"] then
 					namePlate.guild:SetText("<"..Players[name]["guild"]..">")
 					if (strlen(Players[name]["guild"]) > SCN_Options["guild_text_length_of_long"]) then
-						namePlate.guild:SetFont("Interface\\AddOns\\CustomNameplates\\Fonts\\Ubuntu-C.ttf", SCN_Options["guild_text_size_long"]) --13 default
+						namePlate.guild:SetFont("Interface\\AddOns\\CustomNameplates\\Fonts\\Ubuntu-C.ttf", SCN_Options["guild_text_size_long"]) --10 default
 					else
 						namePlate.guild:SetFont("Interface\\AddOns\\CustomNameplates\\Fonts\\Ubuntu-C.ttf", SCN_Options["guild_text_size_short"]) --13 default
 					end
