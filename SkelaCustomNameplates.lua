@@ -28,23 +28,16 @@ function SCNInitialise()
 		SCN_Options["guild"] = true
 		SCN_Options["showPets"] = false
 		SCN_Options["classification"] = true
-		SCN_Options["guild_text_size_short"] = 13
-		SCN_Options["guild_text_size_long"] = 10
-		SCN_Options["guild_text_length_of_long"] = 20
-		SCN_Options["name_text_size"] = 12
-		SCN_Options["rank_text_size"] = 12
-		SCN_Options["level_text_size"] = 11
-		SCN_Options["classification_text_size"] = 12
 	end
 		-- ensure backward compatibility for text size options
-	if SCN_Options["guild_text_size_short"] == nil then
-		SCN_Options["guild_text_size_short"] = 13
-		SCN_Options["guild_text_size_long"] = 10
-		SCN_Options["guild_text_length_of_long"] = 20
+	if SCN_Options["name_text_size"] == nil then
 		SCN_Options["name_text_size"] = 12
 		SCN_Options["rank_text_size"] = 12
 		SCN_Options["level_text_size"] = 11
 		SCN_Options["classification_text_size"] = 12
+		SCN_Options["guild_text_size_short"] = 13
+		SCN_Options["guild_text_size_long"] = 10
+		SCN_Options["guild_text_max_length_of_short"] = 20
 	end
 end
 
@@ -56,13 +49,21 @@ local function scn_print(t)
 	DEFAULT_CHAT_FRAME:AddMessage(t)
 end
 
+local function scn_is_numeric(x)
+    if tonumber(x) ~= nil then
+        return true
+    end
+    return false
+end
+
 -----------------------------------my functions
 
 -------------------------------------------Slash fuctions
 SLASH_CUSTOMNAMEPLATES1 = '/scn';
 
 function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
-	if msg == "" then
+	local parameters = {strsplit(" ", msg, 4)}
+	if parameters[1] == nil then
 		scn_print("Skela Custom Nameplates:")
 		scn_print("-toggle          // Toggle the addon")
 		scn_print("-safetarget      // Toggle target safe mode")
@@ -71,9 +72,10 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 		scn_print("-pvprank         // Show pvp ranks")
 		scn_print("-guild           // Show guild names")
 		scn_print("-classification  // Show if the mob is elite or rare")
+		scn_print("-change          // Change font size related settings")
 		return
 	end
-	if msg == "toggle" then
+	if parameters[1] == "toggle" then
 		SCN_Options["toggle"] = not SCN_Options["toggle"]
 		if SCN_Options["toggle"] then
 			scn_print("The addon is turned ON!")
@@ -82,7 +84,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 		end
 		return
 	end
-	if msg == "safetarget" then
+	if parameters[1] == "safetarget" then
 		SCN_Options["safetarget"] = not SCN_Options["safetarget"]
 		if SCN_Options["safetarget"] then
 			scn_print("Targetsafe radar is turned ON!")
@@ -91,7 +93,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 		end
 		return
 	end
-	if msg == "click" then
+	if parameters[1] == "click" then
 		SCN_Options["click"] = not SCN_Options["click"]
 		if SCN_Options["click"] then
 			scn_print("Targetting by click is ON!")
@@ -100,7 +102,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 		end
 		return
 	end
-	if msg == "fifths" then
+	if parameters[1] == "fifths" then
 		SCN_Options["fifths"] = not SCN_Options["fifths"]
 		if SCN_Options["fifths"] then
 			SCN_Options["pic"] = "barSmall5ths"
@@ -111,7 +113,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 		end
 		return
 	end
-	if msg == "pvprank" then
+	if parameters[1] == "pvprank" then
 		SCN_Options["pvprank"] = not SCN_Options["pvprank"]
 		if SCN_Options["pvprank"] then
 			scn_print("Showing pvp ranks ON!")
@@ -120,7 +122,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 		end
 		return
 	end
-	if msg == "guild" then
+	if parameters[1] == "guild" then
 		SCN_Options["guild"] = not SCN_Options["guild"]
 		if SCN_Options["guild"] then
 			scn_print("Showing guild ON!")
@@ -129,7 +131,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 		end
 		return
 	end
-	if msg == "classification" then
+	if parameters[1] == "classification" then
 		SCN_Options["classification"] = not SCN_Options["classification"]
 		if SCN_Options["classification"] then
 			scn_print("Showing unit classification ON!")
@@ -137,6 +139,75 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 			scn_print("Showing unit classification Off!")
 		end
 		return
+	elseif parameters[1] ~= nil and parameters[1] == "change" then
+		if parameters[2] == "Name" then
+			if parameters[3] == nil then
+				scn_print("Change the font size of the name (Default:12)")
+				scn_print("/scn change Name <new value>")
+			elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
+				SCN_Options["name_text_size"] = tonumber(parameters[3])
+			else
+				scn_print("Invalid parameter given: " .. parameters[3])
+			end
+		elseif parameters[2] == "Rank" then
+				if parameters[3] == nil then
+					scn_print("Change the font size of the rank (Default:12)")
+					scn_print("/scn change Rank <new value>")
+				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
+					SCN_Options["rank_text_size"] = tonumber(parameters[3])
+				else
+					scn_print("Invalid parameter given: " .. parameters[3])
+				end
+		elseif parameters[2] == "Level" then
+				if parameters[3] == nil then
+					scn_print("Change the font size of the level (Default:11)")
+					scn_print("/scn change Level <new value>")
+				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
+					SCN_Options["level_text_size"] = tonumber(parameters[3])
+				else
+					scn_print("Invalid parameter given: " .. parameters[3])
+				end
+		elseif parameters[2] == "Classification" then
+				if parameters[3] == nil then
+					scn_print("Change the font size of the classification (wether the mob is elite or rare) (Default:12)")
+					scn_print("/scn change Classification <new value>")
+				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
+					SCN_Options["classification_text_size"] = tonumber(parameters[3])
+				else
+					scn_print("Invalid parameter given: " .. parameters[3])
+				end
+		elseif parameters[2] == "GuildWhenShort" then
+				if parameters[3] == nil then
+					scn_print("Change the font size of the guildname when the guildname is short (see GuildMaxLengthOfShort) (Default:13)")
+					scn_print("/scn change GuildWhenShort <new value>")
+				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
+					SCN_Options["guild_text_size_short"] = tonumber(parameters[3])
+				else
+					scn_print("Invalid parameter given: " .. parameters[3])
+				end
+		elseif parameters[2] == "GuildWhenLong" then
+				if parameters[3] == nil then
+					scn_print("Change the font size of the guildname when the guildname is long (see GuildMaxLengthOfShort) (Default:10)")
+					scn_print("/scn change GuildWhenLong <new value>")
+				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
+					SCN_Options["guild_text_size_long"] = tonumber(parameters[3])
+				else
+					scn_print("Invalid parameter given: " .. parameters[3])
+				end
+		elseif parameters[2] == "GuildMaxLengthOfShort" then
+				if parameters[3] == nil then
+					scn_print("Change how many characters a guild name has to be to still classify as short (Default:20)")
+					scn_print("/scn change GuildMaxLengthOfShort <new value>")
+				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
+					SCN_Options["guild_text_max_length_of_short"] = tonumber(parameters[3])
+				else
+					scn_print("Invalid parameter given: " .. parameters[3])
+				end
+		else
+			scn_print("Change font size related settings")
+			scn_print("/scn change <option> <new value>")
+			scn_print("Options: Name, Rank, Level, Classification, GuildWhenShort, GuildWhenLong, GuildMaxLengthOfShort")
+		end
 	end
 end
 -------------------------------------------Slash fuctions
@@ -413,7 +484,7 @@ function CustomNameplates_OnUpdate()
 			if	Players[name] ~= nil then
 				if Players[name]["guild"] ~= nil and SCN_Options["guild"] then
 					namePlate.guild:SetText("<"..Players[name]["guild"]..">")
-					if (strlen(Players[name]["guild"]) > SCN_Options["guild_text_length_of_long"]) then
+					if (strlen(Players[name]["guild"]) > SCN_Options["guild_text_max_length_of_short"]) then
 						namePlate.guild:SetFont("Interface\\AddOns\\CustomNameplates\\Fonts\\Ubuntu-C.ttf", SCN_Options["guild_text_size_long"]) --10 default
 					else
 						namePlate.guild:SetFont("Interface\\AddOns\\CustomNameplates\\Fonts\\Ubuntu-C.ttf", SCN_Options["guild_text_size_short"]) --13 default
