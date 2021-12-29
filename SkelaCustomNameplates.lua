@@ -57,9 +57,9 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 		scn_print("-safetarget      // Toggle target safe mode")
 		scn_print("-click           // Toggle targeting by nameplates")
 		scn_print("-fifths          // Toggle lines by every 20% hp")
-		scn_print("-pvprank         // Show pvp ranks!")
-		scn_print("-guild           // Show guild names!")
-		scn_print("-classification  // Show if the mob is elite or rare!")
+		scn_print("-pvprank         // Show pvp ranks")
+		scn_print("-guild           // Show guild names")
+		scn_print("-classification  // Show if the mob is elite or rare")
 		return
 	end
 	if msg == "toggle" then
