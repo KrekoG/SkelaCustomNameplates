@@ -66,10 +66,10 @@ local function scn_print(t)
 end
 
 local function scn_is_numeric(x)
-    if tonumber(x) ~= nil then
-        return true
-    end
-    return false
+  if tonumber(x) ~= nil then
+    return true
+  end
+  return false
 end
 
 -------------------------------------------Slash fuctions
@@ -83,7 +83,6 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 	end
 
 	if parameters[1] == nil then
-
 		local toggle = red .. "Off"
 		local showfriendly = red .. "Hide"
 		local safetarget = red .. "Off"
@@ -117,6 +116,7 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 		if  SCN_Options["classification"] then
 			classification = green .. "Show"
 		end
+
 		scn_print("Skela Custom Nameplates:")
 		scn_print("- toggle " .. grey .. "// Toggle the addon (" .. toggle .. grey .. ")")
 		scn_print("- showfriendly " .. grey .. "// Toggle showing friendlies by default (" .. showfriendly .. grey .. ")")
@@ -215,65 +215,65 @@ function SlashCmdList.CUSTOMNAMEPLATES(msg, editbox)
 				scn_print("Invalid parameter given: " .. parameters[3])
 			end
 		elseif parameters[2] == "Rank" then
-				if parameters[3] == nil then
-					scn_print("Change the font size of the rank (Current:" .. colourCurrentText(SCN_Options["rank_text_size"]) .. "; Default:12)")
-					scn_print("/scn change Rank <new value>")
-				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
-					SCN_Options["rank_text_size"] = tonumber(parameters[3])
-					scn_print("Font size of the rank is set to " .. colourCurrentText(SCN_Options["rank_text_size"]))
-				else
-					scn_print("Invalid parameter given: " .. parameters[3])
-				end
+			if parameters[3] == nil then
+				scn_print("Change the font size of the rank (Current:" .. colourCurrentText(SCN_Options["rank_text_size"]) .. "; Default:12)")
+				scn_print("/scn change Rank <new value>")
+			elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
+				SCN_Options["rank_text_size"] = tonumber(parameters[3])
+				scn_print("Font size of the rank is set to " .. colourCurrentText(SCN_Options["rank_text_size"]))
+			else
+				scn_print("Invalid parameter given: " .. parameters[3])
+			end
 		elseif parameters[2] == "Level" then
-				if parameters[3] == nil then
-					scn_print("Change the font size of the level (Current:" .. colourCurrentText(SCN_Options["level_text_size"]) .. "; Default:11)")
-					scn_print("/scn change Level <new value>")
-				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
-					SCN_Options["level_text_size"] = tonumber(parameters[3])
-					scn_print("Font size of the level is set to " .. colourCurrentText(SCN_Options["level_text_size"]))
-				else
-					scn_print("Invalid parameter given: " .. parameters[3])
-				end
+			if parameters[3] == nil then
+				scn_print("Change the font size of the level (Current:" .. colourCurrentText(SCN_Options["level_text_size"]) .. "; Default:11)")
+				scn_print("/scn change Level <new value>")
+			elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
+				SCN_Options["level_text_size"] = tonumber(parameters[3])
+				scn_print("Font size of the level is set to " .. colourCurrentText(SCN_Options["level_text_size"]))
+			else
+				scn_print("Invalid parameter given: " .. parameters[3])
+			end
 		elseif parameters[2] == "Classification" then
-				if parameters[3] == nil then
-					scn_print("Change the font size of the classification (wether the mob is elite or rare) (Current:" .. colourCurrentText(SCN_Options["classification_text_size"]) .. "; Default:12)")
-					scn_print("/scn change Classification <new value>")
-				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
-					SCN_Options["classification_text_size"] = tonumber(parameters[3])
-					scn_print("Font size of the classification is set to " .. colourCurrentText(SCN_Options["classification_text_size"]))
-				else
-					scn_print("Invalid parameter given: " .. parameters[3])
-				end
+			if parameters[3] == nil then
+				scn_print("Change the font size of the classification (wether the mob is elite or rare) (Current:" .. colourCurrentText(SCN_Options["classification_text_size"]) .. "; Default:12)")
+				scn_print("/scn change Classification <new value>")
+			elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
+				SCN_Options["classification_text_size"] = tonumber(parameters[3])
+				scn_print("Font size of the classification is set to " .. colourCurrentText(SCN_Options["classification_text_size"]))
+			else
+				scn_print("Invalid parameter given: " .. parameters[3])
+			end
 		elseif parameters[2] == "GuildWhenShort" then
-				if parameters[3] == nil then
-					scn_print("Change the font size of the guildname when the guildname is short (see GuildMaxLengthOfShort) (Current:" .. colourCurrentText(SCN_Options["guild_text_size_short"]) .. "; Default:13)")
-					scn_print("/scn change GuildWhenShort <new value>")
-				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
-					SCN_Options["guild_text_size_short"] = tonumber(parameters[3])
-					scn_print("Font size of the guildname when the guildname is short is set to " .. colourCurrentText(SCN_Options["guild_text_size_short"]))
-				else
-					scn_print("Invalid parameter given: " .. parameters[3])
-				end
+			if parameters[3] == nil then
+				scn_print("Change the font size of the guildname when the guildname is short (see GuildMaxLengthOfShort) (Current:" .. colourCurrentText(SCN_Options["guild_text_size_short"]) .. "; Default:13)")
+				scn_print("/scn change GuildWhenShort <new value>")
+			elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
+				SCN_Options["guild_text_size_short"] = tonumber(parameters[3])
+				scn_print("Font size of the guildname when the guildname is short is set to " .. colourCurrentText(SCN_Options["guild_text_size_short"]))
+			else
+				scn_print("Invalid parameter given: " .. parameters[3])
+			end
 		elseif parameters[2] == "GuildWhenLong" then
-				if parameters[3] == nil then
-					scn_print("Change the font size of the guildname when the guildname is long (see GuildMaxLengthOfShort) (Current:" .. colourCurrentText(SCN_Options["guild_text_size_long"]) .. "; Default:10)")
-					scn_print("/scn change GuildWhenLong <new value>")
-				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
-					SCN_Options["guild_text_size_long"] = tonumber(parameters[3])
-					scn_print("Font size of the guildname when the guildname is long is set to " .. colourCurrentText(SCN_Options["guild_text_size_long"]))
-				else
-					scn_print("Invalid parameter given: " .. parameters[3])
-				end
+			if parameters[3] == nil then
+				scn_print("Change the font size of the guildname when the guildname is long (see GuildMaxLengthOfShort) (Current:" .. colourCurrentText(SCN_Options["guild_text_size_long"]) .. "; Default:10)")
+				scn_print("/scn change GuildWhenLong <new value>")
+			elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
+				SCN_Options["guild_text_size_long"] = tonumber(parameters[3])
+				scn_print("Font size of the guildname when the guildname is long is set to " .. colourCurrentText(SCN_Options["guild_text_size_long"]))
+			else
+				scn_print("Invalid parameter given: " .. parameters[3])
+			end
 		elseif parameters[2] == "GuildMaxLengthOfShort" then
-				if parameters[3] == nil then
-					scn_print("Change how many characters a guild name has to be to still classify as short (Current:" .. colourCurrentText(SCN_Options["guild_text_max_length_of_short"]) .. "; Default:20)")
-					scn_print("/scn change GuildMaxLengthOfShort <new value>")
-				elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
-					SCN_Options["guild_text_max_length_of_short"] = tonumber(parameters[3])
-					scn_print("The number of characters the guild name has to be to still classify as short is set to " .. colourCurrentText(SCN_Options["guild_text_size_long"]))
-				else
-					scn_print("Invalid parameter given: " .. parameters[3])
-				end
+			if parameters[3] == nil then
+				scn_print("Change how many characters a guild name has to be to still classify as short (Current:" .. colourCurrentText(SCN_Options["guild_text_max_length_of_short"]) .. "; Default:20)")
+				scn_print("/scn change GuildMaxLengthOfShort <new value>")
+			elseif scn_is_numeric(parameters[3]) and tonumber(parameters[3]) > 0 then
+				SCN_Options["guild_text_max_length_of_short"] = tonumber(parameters[3])
+				scn_print("The number of characters the guild name has to be to still classify as short is set to " .. colourCurrentText(SCN_Options["guild_text_size_long"]))
+			else
+				scn_print("Invalid parameter given: " .. parameters[3])
+			end
 		else
 			scn_print("Change font size related settings")
 			scn_print("/scn change <option> <new value>")
@@ -348,7 +348,6 @@ function SCN_OnUpdate()
 			local Border, Glow, Name, Level = namePlate:GetRegions()
 			Border:Hide()
 			Glow:Hide()
-
 
 --SCN_Options setup
 --		local mouseEnabled = namePlate:IsMouseEnabled()
