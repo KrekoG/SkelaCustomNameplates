@@ -308,7 +308,7 @@ local function fillPlayerDB(name)
 	end
 end
 ]]
-function CustomNameplates_OnUpdate()
+function SCN_OnUpdate()
 
 	if not SCN_Options["toggle"] then
 		return
@@ -546,10 +546,12 @@ function CustomNameplates_OnUpdate()
 	end
 end
 
+--Event handling
+
 local f = CreateFrame("frame")
 f:RegisterEvent("PLAYER_ENTERING_WORLD")
 f:SetScript("OnEvent", function()
 	SCNInitialise()
 	SCNReset()
 end)
-f:SetScript("OnUpdate",CustomNameplates_OnUpdate)
+f:SetScript("OnUpdate", SCN_OnUpdate)
